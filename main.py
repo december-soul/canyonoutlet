@@ -1,12 +1,22 @@
 import requests
 from bs4 import BeautifulSoup
+
 import pickle
-import numpy as np
+
 import smtplib, ssl
 import certifi
 
-URL = 'https://www.canyon.com/en-hr/outlet/road-bikes/?cgid=outlet-road&prefn1=pc_outlet&prefn2=pc_rahmengroesse&prefv1=true&prefv2=L&srule=sort_price_ascending'
+import numpy as np
+
+websiteUrl = 'https://www.canyon.com/en-hr/outlet/road-bikes/'
+parameters = '?cgid=outlet-road&prefn1=pc_outlet&prefn2=pc_rahmengroesse&prefv1=true&prefv2=L&srule=sort_price_ascending'
+
+fullUrl = websiteUrl + parameters
+
 storedBikesFileName = 'bikes.data'
+
+emailAddress = 'markov@fotoin.com'
+password = '12r0QO49p$Ex'
 
 def readFromFile(name):
     with open(name, 'rb') as filehandle:
@@ -16,48 +26,55 @@ def writeToFile(name, data):
     with open(storedBikesFileName, 'wb') as filehandle:
         pickle.dump(data, filehandle)
 
-def scrapeContent():
-    page = requests.get(URL)
+def scrapeContent(url):
+    page = requests.get(url)
     soup = BeautifulSoup(page.content, 'html.parser')
 
     bikes = soup.find_all('div', class_='productTile__contentWrapper')
-    # print("%-*s %-*s %s" % (40, "Model name", 20, "Regular price", "Sale price"))
     filteredContent = []
     for bike in bikes:
         name = bike.find('span', class_='productTile__productName').text.strip()
-        regularPrice = bike.find('span', class_='productTile__productPriceOriginal').text.strip()
-        salePrice = bike.find('span', class_='productTile__productPriceSale').text.strip()
+        regularPrice = bike.find('span', class_='productTile__productPriceOriginal').text.strip().replace('\u20ac', '')
+        salePrice = bike.find('span', class_='productTile__productPriceSale').text.strip().replace('\u20ac', '')
 
         if None in (name, regularPrice, salePrice):
             continue
         
         filteredContent.append([name, regularPrice, salePrice])
-        # print("%-*s %-*s %s" % (40, name, 20, regularPrice, salePrice))
     return filteredContent
 
-def sendMail():
+def sendMail(emailAddress, password, message):
     port = 465
     smtpServer = "smtp.gmail.com"
 
-    emailAddress = "markov@fotoin.com"
-    password = "12r0QO49p$Ex"
-
     context = ssl.create_default_context(cafile=certifi.where())
-
-    message = "Testis"
 
     server = smtplib.SMTP_SSL(smtpServer, port, context=context)
     server.login(emailAddress, password)
     server.sendmail(emailAddress, emailAddress, message)
     server.quit()
 
-currentBikes = scrapeContent()
+def createMessage(bikes):
+    message = '%-*s %-*s %s\n\n' % (43, 'Model', 9, 'Price', 'Discounted')
+    for bike in bikes:
+        print(bike)
+        message += '%-*s %-*s %s\n' % (40, bike[0], 14, bike[1], bike[2])
+    return message
+
+currentBikes = scrapeContent(fullUrl)
 storedBikes = readFromFile(storedBikesFileName)
 
-sendMail()
+currentBikes = [["a", "b", "c"], ["d", "e", "f"], ["g", "b", "i"]]
+storedBikes = [["g", "h", "i"], ["a", "b", "c"]]
 
 if not np.array_equal(currentBikes, storedBikes):
-    #TODO: send mail
+
+    newBikes = [item for item in currentBikes if item not in storedBikes]
+    print(newBikes)
+
+    message = createMessage(newBikes)
+    # sendMail(emailAddress, password, message)
+
     writeToFile(storedBikesFileName, currentBikes)
 
 
