@@ -1,6 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 import pickle
+import numpy as np
+import smtplib, ssl
+import certifi
 
 URL = 'https://www.canyon.com/en-hr/outlet/road-bikes/?cgid=outlet-road&prefn1=pc_outlet&prefn2=pc_rahmengroesse&prefv1=true&prefv2=L&srule=sort_price_ascending'
 storedBikesFileName = 'bikes.data'
@@ -32,11 +35,29 @@ def scrapeContent():
         # print("%-*s %-*s %s" % (40, name, 20, regularPrice, salePrice))
     return filteredContent
 
-content = scrapeContent()
+def sendMail():
+    port = 465
+    smtpServer = "smtp.gmail.com"
 
+    emailAddress = "markov@fotoin.com"
+    password = "12r0QO49p$Ex"
+
+    context = ssl.create_default_context(cafile=certifi.where())
+
+    message = "Testis"
+
+    server = smtplib.SMTP_SSL(smtpServer, port, context=context)
+    server.login(emailAddress, password)
+    server.sendmail(emailAddress, emailAddress, message)
+    server.quit()
+
+currentBikes = scrapeContent()
 storedBikes = readFromFile(storedBikesFileName)
-print(storedBikes)
 
-writeToFile(storedBikesFileName, content)
+sendMail()
+
+if not np.array_equal(currentBikes, storedBikes):
+    #TODO: send mail
+    writeToFile(storedBikesFileName, currentBikes)
 
 
