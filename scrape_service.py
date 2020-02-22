@@ -9,8 +9,8 @@ def scrapeContent(url):
     filteredContent = []
     for bike in bikes:
         name = bike.find('span', class_='productTile__productName').text.strip()
-        regularPrice = bike.find('span', class_='productTile__productPriceOriginal').text.strip().replace('\u20ac', '')
-        salePrice = bike.find('span', class_='productTile__productPriceSale').text.strip().replace('\u20ac', '')
+        regularPrice = bike.find('span', class_='productTile__productPriceOriginal').text.strip()[:-1]
+        salePrice = bike.find('span', class_='productTile__productPriceSale').text.strip()[:-1]
 
         if None in (name, regularPrice, salePrice):
             continue

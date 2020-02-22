@@ -7,8 +7,9 @@ def sendMail(emailAddress, password, message):
 
     context = ssl.create_default_context(cafile=certifi.where())
 
-    server = smtplib.SMTP_SSL(smtpServer, port, context=context)
+    server = smtplib.SMTP_SSL(smtpServer, port)
     server.login(emailAddress, password)
+
     server.sendmail(emailAddress, emailAddress, message)
     server.quit()
 
