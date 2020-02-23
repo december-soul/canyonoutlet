@@ -28,9 +28,10 @@ storedBikes = readFromFile(storedBikesFileName)
 if not np.array_equal(currentBikes, storedBikes):
     newBikes = [item for item in currentBikes if item not in storedBikes]
 
-    message = createMessage(newBikes)
-    sendMail(emailAddress, password, message)
-    print(message)
+    if newBikes.count > 0:
+        message = createMessage(newBikes)
+        sendMail(emailAddress, password, message)
+        print(message)
 
     writeToFile(storedBikesFileName, currentBikes)
 
