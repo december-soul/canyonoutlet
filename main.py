@@ -28,7 +28,7 @@ storedBikes = readFromFile(storedBikesFileName)
 if not np.array_equal(currentBikes, storedBikes):
     newBikes = [item for item in currentBikes if item not in storedBikes]
 
-    if newBikes.count > 0:
+    if len(newBikes):
         message = createMessage(newBikes)
         sendMail(emailAddress, password, message)
         print(message)
