@@ -8,9 +8,9 @@ USAGE
 
 2. Obtain proper url
     - Go to canyon website
-    - Navigate to road bike outlet section
+    - Navigate to outlet section
     - Set desired filters and sorting options
-    - Copy url parameters to urlParameters variable in main.py
+    - Copy complete url to url variable in main.py
 
 3. Run locally or upload to host service
     - First run will send all bikes from outlet matching the given filter criteria
