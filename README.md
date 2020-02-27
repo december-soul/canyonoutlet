@@ -1,7 +1,7 @@
-DESCRIPTION
+DESCRIPTION: 
 Scrapes canyon outlet to let you know when new bike is added.
 
-USAGE
+USAGE: 
 1. Set up gmail
     - Turn on less secure access to your gmail account: https://hotter.io/docs/email-accounts/secure-app-gmail/
     - Set emailAddress and password variables for your account in main.py

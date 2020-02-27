@@ -1,6 +1,6 @@
 from scrape_service import scrapeContent
 from file_service import readFromFile, writeToFile
-from email_service import sendMail, createMessage
+from email_service import sendMail
 
 import numpy as np
 
@@ -17,9 +17,7 @@ if not np.array_equal(currentBikes, storedBikes):
     newBikes = [item for item in currentBikes if item not in storedBikes]
 
     if len(newBikes):
-        message = createMessage(newBikes)
-        sendMail(emailAddress, password, message)
-        print(message)
+        sendMail(emailAddress, password, newBikes)
 
     writeToFile(storageFileName, currentBikes)
 
