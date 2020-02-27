@@ -22,16 +22,27 @@ def createEmail(emailAddress, content):
 
     text = createTxtMessage(content)
     html = """\
-    <html>
-    <head></head>
-    <body>
-        <p>Hi!<br>
-        How are you?<br>
-        Here is the <a href="https://www.python.org">link</a> you wanted.
-        </p>
-    </body>
-    </html>
-    """
+        <html>
+        <head></head>
+        <body>
+            <table>
+                <tr>
+                    <td>Model</td>
+                    <td>Price</td>
+                    <td>Disc.</td>
+                </tr>
+        """
+
+    for bike in content:
+        html += '  <tr><td>'
+        html += '    </td><td>'.join(bike)
+        html += '  </td></tr>'
+
+    html += """\
+        </table>
+        </body>
+        </html>
+        """
 
     part1 = MIMEText(text, 'plain')
     part2 = MIMEText(html, 'html')
@@ -41,7 +52,8 @@ def createEmail(emailAddress, content):
     return msg
 
 def createTxtMessage(content):
-    message = '%-*s %-*s %s\n\n' % (43, 'Model', 9, 'Price', 'Discounted')
+    message = '%-*s %-*s %s\n\n' % (43, 'Model', 9, 'Price', 'Disc.')
     for element in content:
         message += '%-*s %-*s %s\n' % (40, element[0], 14, element[1], element[2])
+    print(message)
     return message

@@ -17,6 +17,7 @@ if not np.array_equal(currentBikes, storedBikes):
     newBikes = [item for item in currentBikes if item not in storedBikes]
 
     if len(newBikes):
+        print("New bikes available!")
         sendMail(emailAddress, password, newBikes)
 
     writeToFile(storageFileName, currentBikes)
