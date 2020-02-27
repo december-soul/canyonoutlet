@@ -1,14 +1,17 @@
 import pickle
+import os
 
-storageFileName = 'bikes.data'
+path = os.path.dirname(os.path.abspath(__file__))
+fileName = 'storage.data'
+fileFullPath = path + '/' + fileName
 
 def readFromFile():
     try:
-        with open(storageFileName, 'rb') as filehandle:
+        with open(fileFullPath, 'rb') as filehandle:
             return pickle.load(filehandle)
     except:
         return []
         
 def writeToFile(data):
-    with open(storageFileName, 'wb') as filehandle:
+    with open(fileFullPath, 'wb') as filehandle:
         pickle.dump(data, filehandle)
