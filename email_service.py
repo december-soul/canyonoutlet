@@ -52,8 +52,8 @@ def createEmail(emailAddress, content):
     return msg
 
 def createTxtMessage(content):
-    message = '%-*s %-*s %s\n\n' % (43, 'Model', 9, 'Price', 'Disc.')
+    message = '%-*s %-*s %s\n\n' % (40, 'Model', 12, 'Price', 'Disc.')
     for element in content:
-        message += '%-*s %-*s %s\n' % (40, element[0], 14, element[1], element[2])
+        message += '%-*s %-*s %s\n' % (40, element[0], 12, element[1], element[2])
     print(message)
     return message
