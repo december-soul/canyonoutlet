@@ -12,14 +12,14 @@ def sendMail(toAddress, content):
     server = smtplib.SMTP_SSL(smtpServer, port)
     server.login(fromAddress, password)
 
-    message = createEmail(toAddress, content)
+    message = createEmail(toAddress, content).as_string()
 
-    server.sendmail(fromAddress, toAddress, message.as_string())
+    server.sendmail(fromAddress, toAddress, message)
     server.quit()
 
 def createEmail(toAddress, content):
     msg = MIMEMultipart('alternative')
-    msg['Subject'] = "Canyon outlet update"
+    msg['Subject'] = "New canyon outlet bikes available"
     msg['From'] = fromAddress
     msg['To'] = toAddress
 
@@ -45,7 +45,6 @@ def createHtmlMessage(content):
         <html>
         <head></head>
         <body>
-            <p>New bikes available!</p>
             <table>
                 <tr>
                     <td><b>Model</b></td>
