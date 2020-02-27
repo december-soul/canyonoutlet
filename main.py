@@ -5,20 +5,11 @@ from email_service import sendMail, createMessage
 import numpy as np
 
 websiteUrl = 'https://www.canyon.com/en-hr/outlet/road-bikes/'
-urlParameters = """?cgid=outlet-road
-                    &prefn1=pc_geschlecht
-                    &prefn2=pc_outlet
-                    &prefn3=pc_rahmengroesse
-                    &prefn4=pg_materialgroup
-                    &prefv1=Unisex
-                    &prefv2=true
-                    &prefv3=XL%7CL
-                    &prefv4=Complete%20bikes
-                    &srule=sort_price_ascending
+urlParameters = """?cgid=outlet-road&prefn1=pc_familie&prefn2=pc_geschlecht&prefn3=pc_outlet&prefn4=pc_rahmengroesse&prefn5=pg_materialgroup&prefv1=Speedmax%7CUltimate%7CAeroad&prefv2=Unisex&prefv3=true&prefv4=L&prefv5=Complete%20bikes&srule=sort_price_ascending
                 """
 
-emailAddress = 'markov@fotoin.com'
-password = '12r0QO49p$Ex'
+emailAddress = 'email4scrape@gmail.com'
+password = 'throwawayaccount'
 
 storedBikesFileName = 'bikes.data'
 

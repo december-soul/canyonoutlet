@@ -1,11 +1,8 @@
 import smtplib, ssl
-import certifi
 
 def sendMail(emailAddress, password, message):
     port = 465
     smtpServer = "smtp.gmail.com"
-
-    context = ssl.create_default_context(cafile=certifi.where())
 
     server = smtplib.SMTP_SSL(smtpServer, port)
     server.login(emailAddress, password)
