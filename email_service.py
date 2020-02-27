@@ -2,34 +2,55 @@ import smtplib, ssl
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-def sendMail(emailAddress, password, content):
+fromAddress = 'email4scrape@gmail.com'
+password = 'throwawayaccount'
+
+def sendMail(toAddress, content):
     port = 465
     smtpServer = "smtp.gmail.com"
 
     server = smtplib.SMTP_SSL(smtpServer, port)
-    server.login(emailAddress, password)
+    server.login(fromAddress, password)
 
-    message = createEmail(emailAddress, content)
+    message = createEmail(toAddress, content)
 
-    server.sendmail(emailAddress, emailAddress, message.as_string())
+    server.sendmail(fromAddress, toAddress, message.as_string())
     server.quit()
 
-def createEmail(emailAddress, content):
+def createEmail(toAddress, content):
     msg = MIMEMultipart('alternative')
     msg['Subject'] = "Canyon outlet update"
-    msg['From'] = emailAddress
-    msg['To'] = emailAddress
+    msg['From'] = fromAddress
+    msg['To'] = toAddress
 
     text = createTxtMessage(content)
+    html = createHtmlMessage(content)
+
+    part1 = MIMEText(text, 'plain')
+    part2 = MIMEText(html, 'html')
+
+    msg.attach(part1)
+    msg.attach(part2)
+    return msg
+
+def createTxtMessage(content):
+    message = '%-*s %-*s %s\n\n' % (40, 'Model', 10, 'Price', 'Disc.')
+    for element in content:
+        message += '%-*s %-*s %s\n' % (40, element[0], 10, element[1], element[2])
+    print(message)
+    return message
+
+def createHtmlMessage(content):
     html = """\
         <html>
         <head></head>
         <body>
+            <p>New bikes available!</p>
             <table>
                 <tr>
-                    <td>Model</td>
-                    <td>Price</td>
-                    <td>Disc.</td>
+                    <td><b>Model</b></td>
+                    <td><b>Price</b></td>
+                    <td><b>Disc.</b></td>
                 </tr>
         """
 
@@ -43,17 +64,5 @@ def createEmail(emailAddress, content):
         </body>
         </html>
         """
-
-    part1 = MIMEText(text, 'plain')
-    part2 = MIMEText(html, 'html')
-
-    msg.attach(part1)
-    msg.attach(part2)
-    return msg
-
-def createTxtMessage(content):
-    message = '%-*s %-*s %s\n\n' % (40, 'Model', 12, 'Price', 'Disc.')
-    for element in content:
-        message += '%-*s %-*s %s\n' % (40, element[0], 12, element[1], element[2])
-    print(message)
-    return message
+    
+    return html
