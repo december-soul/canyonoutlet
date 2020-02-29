@@ -12,3 +12,5 @@ USAGE:
 
 First run will send all bikes from outlet matching the given filter criteria. Every subsequent run will send bikes that are newly added, if any.
 
+To delete stored data run: python main.py --delete
+
