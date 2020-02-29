@@ -1,14 +1,18 @@
 from services.scrape_service import scrapeContent
-from services.file_service import readFromFile, writeToFile
+from services.file_service import readFromFile, writeToFile, clearFolder
 from services.email_service import sendMail
-from services.argument_parser import parseArguments
+from services.argument_parser import getArguments, shouldDeleteData
 
 import numpy as np
 import os
 
-(email, fileName, url) = parseArguments()
+appPath = os.path.dirname(os.path.abspath(__file__))
+dataPath = appPath + '/data/'
 
-dataPath = os.path.dirname(os.path.abspath(__file__)) + '/data/'
+if shouldDeleteData():
+    clearFolder(dataPath)
+
+(email, fileName, url) = getArguments()
 filePath = dataPath + fileName
 
 currentBikes = scrapeContent(url)
