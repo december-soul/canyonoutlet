@@ -2,34 +2,32 @@ import pickle
 import os
 import shutil
 import errno
+class FileService:
+    def __init__(self, appPath):
+        self.__appPath = appPath
+        self.__dataFolderPath = appPath + '/data/'
 
-dataPath = '/data/'
-
-def readFromFile(appPath, fileName):
-    path = appPath + dataPath
-    try:
-        with open(path + fileName, 'rb') as filehandle:
-            return pickle.load(filehandle)
-    except:
-        return []
-        
-def writeToFile(appPath, fileName, data):
-    path = appPath + dataPath
-    make_dir(path)
-    with open(path + fileName, 'wb') as filehandle:
-        pickle.dump(data, filehandle)
-
-def clearDataFolder(appPath):
-    path = appPath + dataPath
-    shutil.rmtree(path)
-    os.mkdir(path)
-    print("Data cleared...")
-    exit(0)
-
-def make_dir(path):
-    if not os.path.exists(path):
+    def readFromFile(self, fileName):
         try:
-            os.makedirs(path)
-        except OSError as exc:
-            if exc.errno != errno.EEXIST:
-                raise
+            with open(self.__dataFolderPath + fileName, 'rb') as filehandle:
+                return pickle.load(filehandle)
+        except:
+            return []
+            
+    def writeToFile(self, fileName, data):
+        self.__make_dir(self.__dataFolderPath)
+        with open(self.__dataFolderPath + fileName, 'wb') as filehandle:
+            pickle.dump(data, filehandle)
+
+    def clearDataFolder(self):
+        shutil.rmtree(self.__dataFolderPath)
+        os.mkdir(self.__dataFolderPath)
+        print("Data cleared...")
+
+    def __make_dir(self, path):
+        if not os.path.exists(path):
+            try:
+                os.makedirs(path)
+            except OSError as exc:
+                if exc.errno != errno.EEXIST:
+                    raise
