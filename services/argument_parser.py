@@ -1,29 +1,39 @@
 import argparse
-
-parser = argparse.ArgumentParser()
-parser.add_argument("-u", "--url", help="Set url")
-parser.add_argument("-e", "--email", help="Set email")
-parser.add_argument("-d", "--delete", help="Delete data", action="store_true")
-
-args = parser.parse_args()
-
-def getArguments():
-    if args.url:
-        url = args.url
-    else:
-        print("Error: Url argument is mandatory")
-        exit(1)
+import re
+class ArgumentParser:
+    def __init__(self):
+        self.__configureArguments()
+        self.__readArguments()
     
-    if args.url:
-        email = args.email
-    else:
-        print("Error: Email argument is mandatory")
-        exit(1)
+    def __configureArguments(self):
+        __parser = argparse.ArgumentParser()
 
-    fileName = email.split("@")[0] + ".data"
+        __parser.add_argument("-u", "--url", help="Set url")
+        __parser.add_argument("-e", "--email", help="Set email")
+        __parser.add_argument("-d", "--delete", help="Delete data", action="store_true")
 
-    return (email, fileName, url)
+        self.__args = __parser.parse_args()
+    
+    def __readArguments(self):
+        url = self.__args.url
+        if url:
+            self.url = url
+        else:
+            print("Error: Url argument is mandatory")
+            exit(1)
+        
+        email = self.__args.email
+        if email:
+            emailRegex = r"[^@]+@[^@]+\.[^@]+"
+            if not re.match(emailRegex, email):
+                print("Error: Email address invalid")
+                exit(1)
+            self.email = email
+        else:
+            print("Error: Email argument is mandatory")
+            exit(1)
 
-def shouldDeleteData():
-    return args.delete
+        self.clearData = self.__args.delete
+
+        self.fileName = self.email.split("@")[0] + ".data"
     
