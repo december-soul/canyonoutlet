@@ -13,7 +13,7 @@ USAGE:
     First run will send all bikes from outlet matching the given filter criteria. Every subsequent run will send bikes that are newly added, if any.
     
 EXAMPLE:
-    python main.py --email my@email.com --localization hr --type road --size L --model Speedmax,Aeroad --gender Unisex
+    python canyonscrape.py --email my@email.com --localization hr --type road --size L --model Speedmax,Aeroad --gender Unisex
 
 
 
