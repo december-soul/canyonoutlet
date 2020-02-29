@@ -1,17 +1,15 @@
 import pickle
 import os
 
-path = os.path.dirname(os.path.abspath(__file__))
-fileName = 'storage.data'
-fileFullPath = path + '/' + fileName
+path = os.path.dirname(os.path.abspath(__file__)) + '/data/'
 
-def readFromFile():
+def readFromFile(fileName):
     try:
-        with open(fileFullPath, 'rb') as filehandle:
+        with open(path + fileName, 'rb') as filehandle:
             return pickle.load(filehandle)
     except:
         return []
         
-def writeToFile(data):
-    with open(fileFullPath, 'wb') as filehandle:
+def writeToFile(fileName, data):
+    with open(path + fileName, 'wb') as filehandle:
         pickle.dump(data, filehandle)
