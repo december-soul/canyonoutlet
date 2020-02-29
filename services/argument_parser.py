@@ -6,34 +6,26 @@ class ArgumentParser:
         self.__readArguments()
     
     def __configureArguments(self):
-        __parser = argparse.ArgumentParser()
+        parser = argparse.ArgumentParser()
+        parser.add_argument("-e", "--email",        help="Set email",                   required=True)
+        parser.add_argument("-l", "--localization", help="Set website localization",    required=True)
+        parser.add_argument("-t", "--type",         help="Set bike type",               required=True)
+        parser.add_argument("-s", "--size",         help="Set bike size",               required=True)
+        parser.add_argument("-m", "--model",        help="Set bike model",              required=True)
 
-        __parser.add_argument("-u", "--url", help="Set url")
-        __parser.add_argument("-e", "--email", help="Set email")
-        __parser.add_argument("-d", "--delete", help="Delete data", action="store_true")
-
-        self.__args = __parser.parse_args()
+        self.__args = parser.parse_args()
     
     def __readArguments(self):
-        url = self.__args.url
-        if url:
-            self.url = url
-        else:
-            print("Error: Url argument is mandatory")
+        self.email = self.__args.email
+        emailRegex = r"[^@]+@[^@]+\.[^@]+"
+        if not re.match(emailRegex, self.email):
+            print("Error: Email address invalid")
             exit(1)
-        
-        email = self.__args.email
-        if email:
-            emailRegex = r"[^@]+@[^@]+\.[^@]+"
-            if not re.match(emailRegex, email):
-                print("Error: Email address invalid")
-                exit(1)
-            self.email = email
-        else:
-            print("Error: Email argument is mandatory")
-            exit(1)
+            
+            self.fileName = self.email.split("@")[0] + ".data"
 
-        self.clearData = self.__args.delete
-
-        self.fileName = self.email.split("@")[0] + ".data"
-    
+        self.url = self.__args.url
+        self.localization = self.__args.localization
+        self.type = self.__args.type
+        self.size = self.__args.size
+        self.model = self.__args.model

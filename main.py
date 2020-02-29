@@ -10,19 +10,16 @@ appPath = os.path.dirname(os.path.abspath(__file__))
 fileService = FileService(appPath)
 
 arguments = ArgumentParser()
-if arguments.clearData:
-    fileService.clearDataFolder()
-    exit(0)
+currentBikeList = scrapeContent(arguments.url)
+storedBikeList = fileService.readFromFile(arguments.fileName)
 
-currentBikes = scrapeContent(arguments.url)
-storedBikes = fileService.readFromFile(arguments.fileName)
-
-if not np.array_equal(currentBikes, storedBikes):
-    newBikes = [item for item in currentBikes if item not in storedBikes]
+newBikesExists = not np.array_equal(currentBikeList, storedBikeList)
+if newBikesExists:
+    newBikes = [item for item in currentBikeList if item not in storedBikeList]
 
     # if len(newBikes):
     #     sendMail(email, newBikes)
 
-    fileService.writeToFile(arguments.fileName, currentBikes)
+    fileService.writeToFile(arguments.fileName, currentBikeList)
 
 
