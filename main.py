@@ -15,13 +15,13 @@ url = buildUrl(arguments)
 
 currentBikeList = scrapeContent(url)
 storedBikeList = fileService.readFromFile(arguments.fileName)
-print(currentBikeList)
+
 newBikesExists = not np.array_equal(currentBikeList, storedBikeList)
 if newBikesExists:
     newBikes = [item for item in currentBikeList if item not in storedBikeList]
 
-    # if len(newBikes):
-    #     sendMail(email, newBikes)
+    if len(newBikes):
+        sendMail(arguments.email, newBikes)
 
     fileService.writeToFile(arguments.fileName, currentBikeList)
 
