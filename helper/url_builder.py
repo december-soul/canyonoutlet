@@ -1,6 +1,6 @@
 def buildUrl(args):
     website =           "https://www.canyon.com/"
-    localization =      "en-%s/" % args.localization
+    locale =            "en-%s/" % args.locale
     outlet =            "outlet/"
     bikeType =          "%s-bikes/" % args.type
     outletType =        "?cgid=outlet-%s" % args.type
@@ -18,7 +18,7 @@ def buildUrl(args):
     hideFilters =       "&hideSelectedFilters=true"
 
     url = "".join([website, 
-                    localization, 
+                    locale, 
                     outlet, 
                     bikeType, 
                     outletType, 

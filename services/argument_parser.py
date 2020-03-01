@@ -29,7 +29,7 @@ class ArgumentParser:
 
         self.fileName = self.email.split("@")[0] + ".data"
 
-        self.localization = self.__args.localization
+        self.locale = self.__args.locale
         self.type = self.__args.type
         self.size = self.__args.size
         self.model = self.__args.model.replace(",", "%7C")
