@@ -11,12 +11,12 @@ class ArgumentParser:
         genderChoices = ["Unisex", "WMNS"]
 
         parser = argparse.ArgumentParser()
-        parser.add_argument("-e", "--email",        help="Set email",                           required=True, type=str)
-        parser.add_argument("-l", "--localization", help="Set website localization",            default="de",  type=str)
-        parser.add_argument("-t", "--type",         help="Set bike type",                       required=True, type=str, choices=typeChoices)
-        parser.add_argument("-s", "--size",         help="Set bike size",                       required=True, type=str, choices=sizeChoices)
-        parser.add_argument("-m", "--model",        help="Set bike models(comma separated)",    required=True, type=str)
-        parser.add_argument("-g", "--gender",       help="Set gender (Unisex/WMNS)",            required=True, type=str, choices=genderChoices)
+        parser.add_argument("-e", "--email",        help="Set email",           required=True,      type=str)
+        parser.add_argument("-l", "--locale",       help="Set website locale",  default="hr",       type=str)
+        parser.add_argument("-t", "--type",         help="Set bike type",       default="road",     type=str, choices=typeChoices)
+        parser.add_argument("-s", "--size",         help="Set bike size",       required=True,      type=str, choices=sizeChoices)
+        parser.add_argument("-m", "--model",        help="Set bike model(s)",   required=True,      type=str)
+        parser.add_argument("-g", "--gender",       help="Set gender",          default="Unisex",   type=str, choices=genderChoices)
 
         self.__args = parser.parse_args()
     
