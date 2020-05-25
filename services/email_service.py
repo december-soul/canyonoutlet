@@ -2,8 +2,8 @@ import smtplib, ssl
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-fromAddress = 'email4scrape@gmail.com'
-password = 'throwawayaccount'
+fromAddress = 'pfischer15@googlemail.com'
+password = 'dtdzcxqfszjirhpq'
 
 def sendMail(toAddress, content):
     port = 465

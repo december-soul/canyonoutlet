@@ -17,6 +17,8 @@ class ArgumentParser:
         parser.add_argument("-s", "--size",         help="Set bike size",       required=True,      type=str, choices=sizeChoices)
         parser.add_argument("-m", "--model",        help="Set bike model(s)",   required=True,      type=str)
         parser.add_argument("-g", "--gender",       help="Set gender",          default="Unisex",   type=str, choices=genderChoices)
+        parser.add_argument("-r", "--group",        help="Set group (Ultegra, 105, Dura Ace, ..)",  default="Ultegra", type=str)
+        parser.add_argument("-p", "--price",        help="Set max price",       default=max,        type=int)
 
         self.__args = parser.parse_args()
     
@@ -34,5 +36,6 @@ class ArgumentParser:
         self.size = self.__args.size
         self.model = self.__args.model.replace(",", "%7C")
         self.gender = self.__args.gender
+        self.group = self.__args.group.replace(",", "%7C")
+        self.max_price = self.__args.price
 
-        

@@ -12,6 +12,8 @@ Argument | Description              | Values                                | De
 --size   | Bike size                | 3XS, 2XS, XS, S, M, L, XL, 2XL, 3XL   | **required**
 --model  | Bike model(s)            |                                       | **required**
 --gender | Bike gender              | Unisex, WMN                           | Unisex
+--group  | Bike Groupset            | Ultegra, 105, Dura Ace, ..            | Ultegra
+--price  | Max Bike price           |                                       | Unlimited
 
 First run will send all bikes from outlet matching the given filter criteria. 
 Every subsequent run will send bikes that are newly added, if any.
