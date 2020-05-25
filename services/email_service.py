@@ -34,9 +34,9 @@ def createEmail(toAddress, content):
     return msg
 
 def createTxtMessage(content):
-    message = '%-*s %-*s %s\n\n' % (40, 'Model', 10, 'Price', 'Disc.')
+    message = '%-*s %-*s %-*s %s\n\n' % (40, 'Model', 10, 'Price Original', 10, 'Price Now', 'Url')
     for element in content:
-        message += '%-*s %-*s %s\n' % (40, element[0], 10, element[1], element[2])
+        message += '%-*s %-*s %-*s %s\n' % (40, element[0], 10, element[1], 10, element[2], element[3])
     print(message)
     return message
 
@@ -48,14 +48,18 @@ def createHtmlMessage(content):
             <table>
                 <tr>
                     <td><b>Model</b></td>
-                    <td><b>Price</b></td>
-                    <td><b>Disc.</b></td>
+                    <td><b>Price Original</b></td>
+                    <td><b>Price Now</b></td>
+                    <td><b>Url</b></td>
                 </tr>
         """
 
     for bike in content:
-        html += '  <tr><td>'
-        html += '    </td><td>'.join(bike)
+        html += '  <tr>'
+        html += '    <td>{}</td>'.format(bike[0])
+        html += '    <td>{}</td>'.format(bike[1])
+        html += '    <td>{}</td>'.format(bike[2])
+        html += '    <td><a href="{}">Link</a></td>'.format(bike[3])
         html += '  </td></tr>'
 
     html += """\
